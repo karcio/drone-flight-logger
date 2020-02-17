@@ -28,5 +28,5 @@ CREATE TABLE users(
    username VARCHAR (50) UNIQUE NOT NULL,
    password VARCHAR (50) NOT NULL
 );
-INSERT INTO users (username,password) VALUES ('karol','pa88w0rd');
+INSERT INTO users (username,password) VALUES ('user','password');
 SELECT * FROM USERS;
