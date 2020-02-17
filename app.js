@@ -1,78 +1,71 @@
-var bodyParser = require("body-parser");
-var express = require("express");
+var express = require('express');
+var session = require('express-session');
+var bodyParser = require('body-parser');
+var pg = require("pg");
+
+const pool = new pg.Pool({
+    user: "dbuser",
+    database: "rcdb",
+    password: "pa88w0rd",
+    port: "5432"
+});
+
 var app = express();
-var flash = require("connect-flash");
-var passport = require("passport"),
-  LocalStrategy = require("passport-local").Strategy;
-app.use(require("cookie-parser")());
-app.use(
-  bodyParser.urlencoded({
-    extended: true
-  })
-);
-app.use(
-  require("express-session")({
-    secret: "keyboard cat",
+app.set('view engine', 'ejs');
+
+app.use(session({
+    secret: 'secret',
     resave: true,
     saveUninitialized: true
-  })
-);
-app.use(express.static("public"));
+}));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use(bodyParser.json());
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash());
-passport.use(
-  new LocalStrategy(function(username, password, done) {
-    if (username !== "admin" || password !== "admin") {
-      return done(null, false, { message: "Incorrect username or password." });
+
+app.get('/', function(request, response) {
+    response.render('login');
+});
+
+app.post('/auth', function(request, response) {
+    var username = request.body.username;
+    var password = request.body.password;
+    if (username && password) {
+        pool.connect(function(err, client, done) {
+            if (err) {
+                console.log(err)
+            } else {
+                client.query('SELECT * FROM USERS WHERE username = $1 AND password = $2', [username, password], function(err, result) {
+                    done();
+                    if (err) {
+                        console.log(err);
+                        throw err;
+                    }
+
+                    if (result.rowCount > 0) {
+                        request.session.loggedin = true;
+                        request.session.username = username;
+                        response.redirect('home');
+                    } else {
+                        response.send('Incorrect Username and/or Password!');
+                    }
+                    response.end();
+                });
+            }
+        });
+    } else {
+        response.send('Please enter Username and Password!');
+        response.end();
     }
-    return done(null, username, password);
-  })
-);
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-});
-app.set("view engine", "ejs");
-app.get("/login", function(req, res) {
-  res.render("login");
-});
-app.post(
-  "/login",
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/login",
-    failureFlash: true
-  })
-);
-app.get("/logout", function(req, res) {
-  req.logout();
-  res.redirect("/login");
 });
 
-/*
-app.get("/", isAuthenticated, function(req, res) {
-  res.render("index");
-});
-//https://stackoverflow.com/questions/41229507/check-if-user-logged-in-by-passport-strategy-different-user-types
-function isAuthenticated(req, res, next) {
-  // do any checks you want to in here
-
-  // CHECK THE USER STORED IN SESSION FOR A CUSTOM VARIABLE
-  // you can do this however you want with whatever variables you set up
-  if (req.user.authenticated) return next();
-
-  // IF A USER ISN'T LOGGED IN, THEN REDIRECT THEM SOMEWHERE
-  res.redirect("/login");
-}
-*/
-app.get("/", function(req, res) {
-  res.render("index");
+app.get('/home', function(request, response) {
+    if (request.session.loggedin) {
+        response.render('home');
+    } else {
+        response.send('Please login to view this page!');
+    }
+    response.end();
 });
 
-app.listen(3000, function() {
-  console.log("Server is running on port 3000");
-});
+app.listen(3000);
