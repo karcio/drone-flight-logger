@@ -9,31 +9,16 @@
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-	<title>Login to application</title>
+	<title>Loggin error: </title>
 </head>
 
 <body>
-
-
-	<div class=".container-fluid">
-		<div class="row justify-content-center align-items-center" style="height:100vh">
-			<div class="col-4">
-				<div class="card">
-					<div class="card-body">
-						<form action="auth" method="POST">
-							<div class="form-group">
-								<input type="text" class="form-control" name="username" placeholder="Username" required />
-							</div>
-							<div class="form-group">
-								<input type="password" class="form-control" name="password" placeholder="Password" required />
-							</div>
-							<button type="submit" class="btn btn-dark">login</button>
-						</form>
-					</div>
-				</div>
-			</div>
+	<div class="container">
+		<div class="alert alert-danger">
+			<strong>Error!</strong> Login failed: wrong user or password. <a href="/" class="alert-link">Click here to try again</a>.
 		</div>
 	</div>
+
 </body>
 
 </html>
