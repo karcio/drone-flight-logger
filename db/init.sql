@@ -1,6 +1,6 @@
 -- Postgres set up user
 su - postgres
-psql
+psql -p 5433
 
 DROP DATABASE IF EXISTS rcdatadb;
 CREATE DATABASE rcdatadb;
