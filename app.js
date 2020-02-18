@@ -1,15 +1,17 @@
+require('dotenv').config();
 const path = require("path");
 const favicon = require("express-favicon");
 const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const pg = require("pg");
+const app_port = process.env.APP_PORT;
 
 const pool = new pg.Pool({
-  user: "dbuser",
-  database: "rcdb",
-  password: "pa88w0rd",
-  port: "5432"
+  user: process.env.DB_USER,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASS,
+  port: process.env.DB_PORT
 });
 
 var app = express();
@@ -52,7 +54,6 @@ app.post('/auth', function(request, response) {
             request.session.username = username;
             response.redirect('home');
           } else {
-            //response.send('Incorrect Username and/or Password!');
             response.redirect('401');
           }
           response.end();
@@ -70,7 +71,6 @@ app.get('/home', function(request, response) {
   if (request.session.loggedin) {
     response.render('home');
   } else {
-    //response.send('Please login to view this page!');
     response.redirect('403');
   }
   response.end();
@@ -85,4 +85,4 @@ app.get('/403', function(request, response) {
   response.render('403');
 });
 
-app.listen(3000);
+app.listen(app_port);

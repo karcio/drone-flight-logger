@@ -1,45 +1,48 @@
-# drone-flight-logger
+# drone-flight-logger version: 0.1
+***
 
 1.  Clone repository
 
-
-    git clone git@github.com:karcio/drone-flight-logger.git
-
+```
+git clone git@github.com:karcio/drone-flight-logger.git
+```
 2.  Create database and user in postgres
 
+```
+DROP DATABASE IF EXISTS rcdatadb;
 
-    su - postgres
-    psql
+CREATE DATABASE rcdatadb;
 
-    CREATE DATABASE rcdb;
+\c rcdatadb
 
-    CREATE USER dbuser;
+CREATE USER user1;
 
-    ALTER USER dbuser WITH ENCRYPTED PASSWORD 'pa88w0rd';
+ALTER USER user1 WITH ENCRYPTED PASSWORD 'password';
 
-    GRANT ALL PRIVILEGES ON DATABASE rcdb TO dbuser;
+GRANT ALL PRIVILEGES ON DATABASE rcdatadb TO user1;
 
-    ALTER USER dbuser WITH SUPERUSER;
+ALTER USER user1 WITH SUPERUSER;
 
-    ALTER DATABASE rcdb OWNER TO dbuser;
+ALTER DATABASE rcdatadb OWNER TO user1;
 
-    DROP TABLE IF EXISTS users ;
+DROP TABLE IF EXISTS users;
 
-    CREATE TABLE users(
-       id serial PRIMARY KEY,
-       username VARCHAR (50) UNIQUE NOT NULL,
-       password VARCHAR (50) NOT NULL
-    );
+CREATE TABLE users(
+   id serial PRIMARY KEY,
+   username VARCHAR (50) UNIQUE NOT NULL,
+   password VARCHAR (50) NOT NULL
+);
 
-    INSERT INTO users (username,password) VALUES ('user','password');
+INSERT INTO users (username,password) VALUES ('user1','password');
+```
 
-3.  Install dependencies and start appliation
+3.  Install dependencies and start application
 
-
-    cd drone-flight-logger.git
-    npm install
-    npm run start
-
+```
+cd drone-flight-logger.git
+npm install
+npm run start
+```
 
 4. Create docker image
 
