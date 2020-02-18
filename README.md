@@ -43,9 +43,23 @@ cd drone-flight-logger.git
 npm install
 npm run start
 ```
-
-4. Create docker image
+4. Rename .env.template and edit
 
 ```
-docker build -t karcio/dfl:latest -f /home/karcio/git/drone-flight-logger/Dockerfile .
+mv .env.template .env
+vim .env
+```
+```
+DB_USER=user1
+DB_PASS=password
+DB_PORT=5432
+DB_NAME=rcdatadb
+APP_PORT=5000
+```
+
+4. Create docker image (in progress)
+
+```
+cd git
+docker build -t karcio/dfl:latest -f drone-flight-logger/Dockerfile .
 ```
