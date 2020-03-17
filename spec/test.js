@@ -14,6 +14,7 @@ describe('Check if login successful', function() {
   beforeEach(function(done) {
     this.driver = new selenium.Builder().withCapabilities(selenium.Capabilities.chrome()).build();
     this.driver.manage().timeouts().setScriptTimeout(10000);
+    this.driver.manage().window().maximize();
     this.driver.get(baseUrl).then(done);
   });
 
