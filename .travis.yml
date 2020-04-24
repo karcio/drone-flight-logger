@@ -20,7 +20,7 @@ before_script:
   - npm install
   - npm install --only=dev
   - npm install -g chromedriver forever
-  - npm run start &
+  - node app.js &
 
 script:
   - npm start test
