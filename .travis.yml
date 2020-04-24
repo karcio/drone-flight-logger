@@ -32,8 +32,7 @@ before_script:
   - npm install
   - npm install --only=dev
   - npm install -g chromedriver forever
-  - mv .env.test .env 
-  - cat .env
+  - mv .env.template .env
   - npm run start &
   - sleep 30
 
