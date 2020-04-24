@@ -4,6 +4,6 @@ node_js:
 
 before_script:
   - npm install
-  - npm install --dev
+  - npm install --only=dev
 script:
   - npm test
