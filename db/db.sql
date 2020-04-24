@@ -6,3 +6,5 @@ CREATE TABLE users(
 INSERT INTO users (username,password) VALUES ('user1','password');
 SELECT * FROM users;
 ALTER TABLE users OWNER TO user1;
+GRANT USAGE ON SCHEMA public TO ;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO ;
