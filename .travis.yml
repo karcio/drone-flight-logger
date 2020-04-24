@@ -22,4 +22,4 @@ before_script:
   - npm install -g chromedriver
 
 script:
-  - npm test
+
