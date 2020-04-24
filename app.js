@@ -42,7 +42,7 @@ app.post('/auth', function(request, response) {
       if (err) {
         console.log(err)
       } else {
-        client.query('SELECT * FROM USERS WHERE username = $1 AND password = $2', [username, password], function(err, result) {
+        client.query('SELECT * FROM users WHERE username = $1 AND password = $2', [username, password], function(err, result) {
           done();
           if (err) {
             console.log(err);
