@@ -22,9 +22,9 @@ cache:
 
 before_script:
   - psql -c 'create database rcdatadb;' -U $PGUSER
-  - psql --dbname=$rcdatadb --file=db/db.sql
   - psql -c "CREATE USER user1 WITH PASSWORD 'password';" -U $PGUSER
   - psql -c "GRANT ALL PRIVILEGES ON DATABASE rcdatadb TO user1;" -U $PGUSER
+  - psql --dbname=$rcdatadb --file=db/db.sql
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 5
@@ -38,4 +38,5 @@ before_script:
   - sleep 10
 
 script:
-  - echo "skipping tests"
+  #- echo "skipping tests"
+  - npm run test
