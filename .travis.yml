@@ -15,8 +15,8 @@ cache:
   - node_modules
 
 before_script:
-  - "sh -e /etc/init.d/xvfb start"
   - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
   - jdk_switcher use oraclejdk8
   - npm install
   - npm install --only=dev
