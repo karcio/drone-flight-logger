@@ -22,7 +22,6 @@ cache:
 before_script:
   - psql -c 'create database rcdatadb;' -U postgres
   - psql -c 'CREATE TABLE users(id serial PRIMARY KEY, username VARCHAR (50) UNIQUE NOT NULL, password VARCHAR (50) NOT NULL);' -U postgres
-  - psql -c 'INSERT INTO users (username,password) VALUES ('user1','password');' -U postgres
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 5
