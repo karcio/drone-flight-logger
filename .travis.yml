@@ -21,11 +21,6 @@ cache:
 
 before_script:
   - psql -c 'create database rcdatadb;' -U postgres
-  - psql -c 'crate user user1;' -U postgres
-  - psql -c 'ALTER USER user1 WITH ENCRYPTED PASSWORD 'password';' -U postgres
-  - psql -c 'GRANT ALL PRIVILEGES ON DATABASE rcdatadb TO user1;' -U postgres
-  - psql -c 'ALTER USER user1 WITH SUPERUSER;' -U postgres
-  - psql -c 'ALTER DATABASE rcdatadb OWNER TO user1;' -U postgres
   - psql -c 'CREATE TABLE users(id serial PRIMARY KEY, username VARCHAR (50) UNIQUE NOT NULL, password VARCHAR (50) NOT NULL);' -U postgres
   - psql -c 'INSERT INTO users (username,password) VALUES ('user1','password');' -U postgres
   - "export DISPLAY=:99.0"
