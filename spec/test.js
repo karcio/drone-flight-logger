@@ -16,6 +16,7 @@ describe('Check if login successful', function() {
     this.driver.manage().timeouts().setScriptTimeout(10000);
     this.driver.manage().window().maximize();
     this.driver.get(baseUrl).then(done);
+    console.log(baseUrl);
   });
 
   afterEach(function(done) {
