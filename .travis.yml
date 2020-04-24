@@ -28,4 +28,4 @@ before_script:
   - sleep 30
 
 script:
-  - npm run test
+  - npm run test && exit 0

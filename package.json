@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon app.js",
     "start": "forever -w app.js",
-    "test": "node spec/test1.js"
+    "test": "node_modules/jasmine/bin/jasmine.js spec/test.js"
   },
   "author": "",
   "license": "ISC",
