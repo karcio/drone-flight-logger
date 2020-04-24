@@ -24,6 +24,7 @@ before_script:
   - psql -c 'create database rcdatadb;' -U $PGUSER
   - psql -c 'create table users(id serial PRIMARY KEY, username VARCHAR (50) UNIQUE NOT NULL, password VARCHAR (50) NOT NULL);' -U $PGUSER
   - psql -c "CREATE USER user1 WITH PASSWORD 'password';" -U $PGUSER
+  - psql -c "GRANT ALL PRIVILEGES ON DATABASE rcdatadb TO user1;" -U $PGUSER
   #- bash script.sh
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
