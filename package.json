@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon app.js",
     "start": "forever -w app.js",
-    "test": "node spec/test1.js"
+    "test": "nodespec/test.js"
   },
   "author": "",
   "license": "ISC",
