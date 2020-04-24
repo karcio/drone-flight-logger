@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/karcio/drone-flight-logger.svg?branch=development)](https://travis-ci.org/karcio/drone-flight-logger)
 # drone-flight-logger version: 0.1
 ***
 
