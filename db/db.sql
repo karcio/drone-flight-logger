@@ -4,4 +4,4 @@ CREATE TABLE users(
    password VARCHAR (50) NOT NULL
 );
 INSERT INTO users (username,password) VALUES ('user1','password');
-SELECT * FROM USERS;
+SELECT * FROM users;
