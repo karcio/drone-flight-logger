@@ -5,13 +5,12 @@ node_js:
 	- 7
 
 before_script:
-	- "sh -e /etc/init.d/xvfb start"
-    	- "export DISPLAY=:99.0"
-    	- jdk_switcher use oraclejdk8
+  - "sh -e /etc/init.d/xvfb start"
+  - "export DISPLAY=:99.0"
+  - jdk_switcher use oraclejdk8
 
 addons:
   chrome: stable
-
 
 cache:
   directories:
@@ -21,4 +20,4 @@ before_script:
   - npm install
   - npm install --only=dev
 script:
-	- npm test
+  - npm test
