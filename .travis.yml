@@ -4,19 +4,20 @@ language: node_js
 node_js:
   - node 
 
-before_script:
-  - "sh -e /etc/init.d/xvfb start"
-  - "export DISPLAY=:99.0"
-  - jdk_switcher use oraclejdk8
+  addons:
+  chrome: stable
 
-#addons:
-#  chrome: stable
+services:
+  - xvfb
 
 cache:
   directories:
   - node_modules
 
 before_script:
+  - "sh -e /etc/init.d/xvfb start"
+  - "export DISPLAY=:99.0"
+  - jdk_switcher use oraclejdk8
   - npm install
   - npm install --only=dev
   - npm install -g chromedriver forever
