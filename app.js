@@ -37,12 +37,14 @@ app.get('/', function(request, response) {
 app.post('/auth', function(request, response) {
   var username = request.body.username;
   var password = request.body.password;
+  console.log('username: ', username);
+  console.log('password: ', password);
   if (username && password) {
     pool.connect(function(err, client, done) {
       if (err) {
         console.log(err)
       } else {
-        client.query('SELECT * FROM users WHERE username = $1 AND password = $2', [username, password], function(err, result) {
+        client.query('SELECT * FROM USERS WHERE username = $1 AND password = $2', [username, password], function(err, result) {
           done();
           if (err) {
             console.log(err);
