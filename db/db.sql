@@ -5,3 +5,4 @@ CREATE TABLE users(
 );
 INSERT INTO users (username,password) VALUES ('user1','password');
 SELECT * FROM users;
+ALTER TABLE users OWNER TO user1;
