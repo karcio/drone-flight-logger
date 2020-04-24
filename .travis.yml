@@ -13,15 +13,16 @@ services:
 
 env:
   global:
-  - PGPORT=5432
+    - PGUSER=postgres
+    - PGPORT=5432
 
 cache:
   directories:
   - node_modules
 
 before_script:
-  - psql -c 'create database rcdatadb;' -U postgres
-  - psql -c 'create table users(id serial PRIMARY KEY, username VARCHAR (50) UNIQUE NOT NULL, password VARCHAR (50) NOT NULL);' -U postgres
+  - psql -c 'create database rcdatadb;' -U $PGUSER
+  - psql -c 'create table users(id serial PRIMARY KEY, username VARCHAR (50) UNIQUE NOT NULL, password VARCHAR (50) NOT NULL);' -U $PGUSER
   - bash script.sh
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
@@ -36,4 +37,4 @@ before_script:
   - sleep 30
 
 script:
-  - npm run test && exit 0
+  - npm run test
