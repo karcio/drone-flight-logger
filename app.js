@@ -37,8 +37,7 @@ app.get('/', function(request, response) {
 app.post('/auth', function(request, response) {
   var username = request.body.username;
   var password = request.body.password;
-  console.log('username: ', username);
-  console.log('password: ', password);
+
   if (username && password) {
     pool.connect(function(err, client, done) {
       if (err) {
@@ -50,7 +49,6 @@ app.post('/auth', function(request, response) {
             console.log(err);
             throw err;
           }
-
           if (result.rowCount > 0) {
             request.session.loggedin = true;
             request.session.username = username;
@@ -64,7 +62,6 @@ app.post('/auth', function(request, response) {
     });
   } else {
     response.send('Please enter Username and Password!');
-    //response.redirect('403');
     response.end();
   }
 });
@@ -87,5 +84,138 @@ app.get('/403', function(request, response) {
   response.render('403');
 });
 
-//app.listen(app_port);
+app.get("/drones", (request, response) => {
+  //if (request.session.loggedin) {
+  //  response.render('drones');
+  //} else {
+  //  response.redirect('403');
+  //}
+  //response.end();
+  pool.connect((err, client, done) => {
+    if (err) {
+      response.send('no database connection ...');
+      console.log(err);
+    }
+    const query =
+      "select * from drones";
+    client.query(query, (error, result) => {
+      done();
+      if (error) {
+        response.status(400).json({
+          error
+        });
+      }
+      if (result.rowCount > 0) {
+        response.render("drones", {
+          result: result.rows
+        });
+        console.log(result.rows);
+      } else {
+        response.render('500');
+      }
+    });
+  });
+});
+
+app.get("/flightlog", (request, response) => {
+  //if (request.session.loggedin) {
+  //  response.render('drones');
+  //} else {
+  //  response.redirect('403');
+  //}
+  //response.end();
+  pool.connect((err, client, done) => {
+    if (err) {
+      response.send('no database connection ...');
+      console.log(err);
+    }
+    const query =
+      "select * from flight_log";
+    client.query(query, (error, result) => {
+      done();
+      if (error) {
+        response.status(400).json({
+          error
+        });
+      }
+      if (result.rowCount > 0) {
+        response.render("flightlog", {
+          result: result.rows
+        });
+        console.log(result.rows);
+      } else {
+        response.render('500');
+      }
+    });
+  });
+});
+
+app.get('/adddrone', function(request, response) {
+  response.render('adddrone');
+});
+
+app.post("/adddrone", (req, res) => {
+  const data = {
+    drone_id: req.body.drone_id,
+    drone_name: req.body.drone_name,
+    fc: req.body.fc,
+    esc: req.body.esc,
+    camera: req.body.camera
+  };
+  pool.connect((err, client, done) => {
+    if (err) {
+      res.send('no database connection ...');
+      console.log(err);
+    }
+    const query =
+      "INSERT INTO drones(drone_id, drone_name, fc, esc, camera) VALUES($1, $2, $3, $4, $5) RETURNING *";
+    const values = [data.drone_id, data.drone_name, data.fc, data.esc, data.camera];
+
+    client.query(query, values, (error, result) => {
+      done();
+      if (error) {
+        console.log(error);
+        res.status(400).json({
+          error
+        });
+      }
+      res.redirect("/adddrone");
+    });
+  });
+});
+
+app.get('/addflight', function(request, response) {
+  response.render('addflight');
+});
+
+app.post("/addflight", (req, res) => {
+  const data = {
+    date: req.body.date,
+    place: req.body.place,
+    drone_id: req.body.drone_id,
+    lipo: req.body.lipo,
+    notes: req.body.notes
+  };
+  pool.connect((err, client, done) => {
+    if (err) {
+      res.send('no database connection ...');
+      console.log(err);
+    }
+
+    const query =
+      "INSERT INTO flight_log (date, place, drone_id, lipo, notes) VALUES ($1, $2, $3, $4, $5) RETURNING *";
+    const values = [data.date, data.place, data.drone_id, data.lipo, data.notes];
+
+    client.query(query, values, (error, result) => {
+      done();
+      if (error) {
+        res.status(400).json({
+          error
+        });
+      }
+      res.redirect("/addflight");
+    });
+  });
+});
+
 app.listen(app_port, () => console.log(`... Application running ...`));
