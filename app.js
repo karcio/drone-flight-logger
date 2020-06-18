@@ -109,7 +109,7 @@ app.get("/drones", (request, response) => {
         response.render("drones", {
           result: result.rows
         });
-        console.log(result.rows);
+        //console.log(result.rows);
       } else {
         response.render('500');
       }
@@ -142,7 +142,7 @@ app.get("/flightlog", (request, response) => {
         response.render("flightlog", {
           result: result.rows
         });
-        console.log(result.rows);
+        //console.log(result.rows);
       } else {
         response.render('500');
       }
