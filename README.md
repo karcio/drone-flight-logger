@@ -6,19 +6,19 @@
 
 1.  Clone repository
 
-
+```
     git clone git@github.com:karcio/drone-flight-logger.git
-
+```
 2.  Create database
 
-
+```
     DROP DATABASE IF EXISTS rcdatadb;
     CREATE DATABASE rcdatadb;
     \c rcdatadb
-
+```
 3.  Create user and user table
 
-
+```
     CREATE USER dbuser;
     ALTER USER dbuser WITH ENCRYPTED PASSWORD 'pa88w0rd';
     GRANT ALL PRIVILEGES ON DATABASE rcdatadb TO dbuser;
@@ -31,10 +31,10 @@
        password VARCHAR (50) NOT NULL
     );
     INSERT INTO users (username,password) VALUES ('dbuser','pa88w0rd');
-
+```
 4.  Create tables
 
-
+```
     DROP TABLE IF EXISTS drones;
     CREATE TABLE drones (
         id serial PRIMARY KEY,
@@ -55,17 +55,17 @@
         notes text NOT NULL,
         FOREIGN KEY (drone_id) REFERENCES drones (drone_id)
     );
-
+```
 3.  Install dependencies and start application
 
-
+```
     cd drone-flight-logger.git
     npm install
     npm run start
-
+```
 4.  Rename .env.template and edit
 
-
+```
     mv .env.template .env
     vim .env
 
@@ -74,9 +74,10 @@
     DB_PORT=5432
     DB_NAME=rcdatadb
     APP_PORT=5000
-
+```
 4.  Create docker image - TODO
 
-
+```
     cd git
     docker build -t karcio/dfl:latest -f drone-flight-logger/Dockerfile .
+```
