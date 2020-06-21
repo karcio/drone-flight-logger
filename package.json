@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon app.js",
     "start": "forever -w app.js",
-    "test": "node_modules/jasmine/bin/jasmine.js spec/test.js"
+    "test1": "node_modules/jasmine/bin/jasmine.js spec/test.js",
+    "test": "mocha --timeout 10000"
   },
   "author": "",
   "license": "ISC",
@@ -17,11 +18,15 @@
     "express-favicon": "^2.0.1",
     "express-session": "^1.17.0",
     "forever": "^2.0.0",
+    "minimist": "^1.2.5",
     "nodemon": "^2.0.2",
     "pg": "^7.18.1",
     "selenium-webdriver": "^3.6.0"
   },
   "devDependencies": {
-    "jasmine": "^3.5.0"
+    "chai": "^4.2.0",
+    "jasmine": "^3.5.0",
+    "mocha": "^8.0.1",
+    "request": "^2.88.2"
   }
 }
