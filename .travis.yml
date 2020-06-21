@@ -38,4 +38,4 @@ before_script:
 
 script:
   - echo "skipping tests"
-  #- npm run test
+  - npm test
