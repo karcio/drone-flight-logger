@@ -25,15 +25,15 @@ before_script:
   - psql -c "CREATE USER dbuser WITH PASSWORD 'pa88w0rd';" -U $PGUSER
   - psql -c "GRANT ALL PRIVILEGES ON DATABASE rcdatadb TO dbuser;" -U $PGUSER
   - psql --dbname=$rcdatadb --file=db/init.sql
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 5
+  #- "export DISPLAY=:99.0"
+  #- "sh -e /etc/init.d/xvfb start"
+  #- sleep 5
   #- jdk_switcher use oraclejdk8
   - npm install
   - npm install --only=dev
-  - npm install -g chromedriver forever
+  #- npm install -g chromedriver forever
   - mv .env.template .env
-  - npm run start &
+  - npm run dev &
   - sleep 10
 
 script:
