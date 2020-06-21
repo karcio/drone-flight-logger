@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/karcio/drone-flight-logger.svg?branch=development)](https://travis-ci.org/karcio/drone-flight-logger)
+[![Build Status](https://travis-ci.org/karcio/drone-flight-logger.svg?branch=master)](https://travis-ci.org/karcio/drone-flight-logger)
 
 # Drone flight logger version: 0.6.1
 
