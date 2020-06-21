@@ -218,4 +218,4 @@ app.post("/addflight", (req, res) => {
   });
 });
 
-app.listen(app_port, () => console.log(`... Application running ...`));
+app.listen(app_port, () => console.log(`... Application running on port: ` + app_port + `...`));
