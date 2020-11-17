@@ -33,13 +33,13 @@ app.use(
 );
 app.use(bodyParser.json());
 
-app.get("/", function (request, response) {
-  response.render("login");
+app.get("/", function (req, res) {
+  res.render("login");
 });
 
-app.post("/auth", function (request, response) {
-  var username = request.body.username;
-  var password = request.body.password;
+app.post("/auth", function (req, res) {
+  var username = req.body.username;
+  var password = req.body.password;
 
   if (username && password) {
     pool.connect(function (err, client, done) {
@@ -55,66 +55,67 @@ app.post("/auth", function (request, response) {
               console.log(err);
               throw err;
             }
+            console.log(result);
             if (result.rowCount > 0) {
-              request.session.loggedin = true;
-              request.session.username = username;
-              response.redirect("home");
+              req.session.loggedin = true;
+              req.session.username = username;
+              res.redirect("home");
             } else {
-              response.redirect("401");
+              res.redirect("401");
             }
-            response.end();
+            res.end();
           }
         );
       }
     });
   } else {
-    response.send("Please enter Username and Password!");
-    response.end();
+    res.send("Please enter Username and Password!");
+    res.end();
   }
 });
 
-app.get("/home", function (request, response) {
-  if (request.session.loggedin) {
-    response.render("home");
+app.get("/home", function (req, res) {
+  if (req.session.loggedin) {
+    res.render("home");
   } else {
-    response.redirect("403");
+    res.redirect("403");
   }
-  response.end();
+  res.end();
 });
 
-app.get("/401", function (request, response) {
-  response.render("401");
+app.get("/401", function (req, res) {
+  res.render("401");
 });
 
-app.get("/403", function (request, response) {
-  response.render("403");
+app.get("/403", function (req, res) {
+  res.render("403");
 });
 
-app.get("/drones", (request, response) => {
-  if (request.session.loggedin) {
-    response.render("drones");
+app.get("/drones", (req, res) => {
+  if (req.session.loggedin) {
+    res.render("drones");
   } else {
-    response.redirect("403");
+    res.redirect("403");
   }
-  response.end();
+  res.end();
 });
 
-app.get("/flightlog", (request, response) => {
-  if (request.session.loggedin) {
-    response.render("flightlog");
+app.get("/flightlog", (req, res) => {
+  if (req.session.loggedin) {
+    res.render("flightlog");
   } else {
-    response.redirect("403");
+    res.redirect("403");
   }
-  response.end();
+  res.end();
 });
 
-app.get("/adddrone", function (request, response) {
-  if (request.session.loggedin) {
-    response.render("adddrone");
+app.get("/adddrone", function (req, res) {
+  if (req.session.loggedin) {
+    res.render("adddrone");
   } else {
-    response.redirect("403");
+    res.redirect("403");
   }
-  response.end();
+  res.end();
 });
 
 app.post("/adddrone", (req, res) => {
@@ -153,13 +154,13 @@ app.post("/adddrone", (req, res) => {
   });
 });
 
-app.get("/addflight", function (request, response) {
-  if (request.session.loggedin) {
-    response.render("addflight");
+app.get("/addflight", function (req, res) {
+  if (req.session.loggedin) {
+    res.render("addflight");
   } else {
-    response.redirect("403");
+    res.redirect("403");
   }
-  response.end();
+  res.end();
 });
 
 app.post("/addflight", (req, res) => {
