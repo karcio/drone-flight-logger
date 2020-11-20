@@ -6,6 +6,10 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const pg = require("pg");
 const app_port = process.env.APP_PORT;
+const users = require("./models/users");
+const droneDatas = require("./models/data");
+//const drones = require("./models/data");
+//const flights = require("./models/data");
 
 const pool = new pg.Pool({
   user: process.env.DB_USER,
@@ -32,17 +36,24 @@ app.use(
   })
 );
 app.use(bodyParser.json());
+app.use(users);
+app.use(droneDatas.drones);
+app.use(droneDatas.flights);
 
-app.get("/", function (req, res) {
+app.get("/", (req, res) => {
   res.render("login");
 });
 
-app.post("/auth", function (req, res) {
+app.get("/auth", (req, res) => {
+  res.render("login");
+});
+
+app.post("/auth", (req, res) => {
   var username = req.body.username;
   var password = req.body.password;
 
   if (username && password) {
-    pool.connect(function (err, client, done) {
+    pool.connect((err, client, done) => {
       if (err) {
         console.log(err);
       } else {
@@ -55,7 +66,6 @@ app.post("/auth", function (req, res) {
               console.log(err);
               throw err;
             }
-            console.log(result);
             if (result.rowCount > 0) {
               req.session.loggedin = true;
               req.session.username = username;
@@ -74,7 +84,7 @@ app.post("/auth", function (req, res) {
   }
 });
 
-app.get("/home", function (req, res) {
+app.get("/home", (req, res) => {
   if (req.session.loggedin) {
     res.render("home");
   } else {
@@ -83,17 +93,18 @@ app.get("/home", function (req, res) {
   res.end();
 });
 
-app.get("/401", function (req, res) {
+app.get("/401", (req, res) => {
   res.render("401");
 });
 
-app.get("/403", function (req, res) {
+app.get("/403", (req, res) => {
   res.render("403");
 });
 
 app.get("/drones", (req, res) => {
   if (req.session.loggedin) {
     res.render("drones");
+    console.log(rdrones);
   } else {
     res.redirect("403");
   }
@@ -103,13 +114,14 @@ app.get("/drones", (req, res) => {
 app.get("/flightlog", (req, res) => {
   if (req.session.loggedin) {
     res.render("flightlog");
+    console.log(rflights);
   } else {
     res.redirect("403");
   }
   res.end();
 });
 
-app.get("/adddrone", function (req, res) {
+app.get("/adddrone", (req, res) => {
   if (req.session.loggedin) {
     res.render("adddrone");
   } else {
@@ -154,7 +166,7 @@ app.post("/adddrone", (req, res) => {
   });
 });
 
-app.get("/addflight", function (req, res) {
+app.get("/addflight", (req, res) => {
   if (req.session.loggedin) {
     res.render("addflight");
   } else {
@@ -200,5 +212,5 @@ app.post("/addflight", (req, res) => {
 });
 
 app.listen(app_port, () =>
-  console.log(`... Application running on port: ` + app_port + `...`)
+  console.log(`... Application running on port: ${app_port} ...`)
 );
