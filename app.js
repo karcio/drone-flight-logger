@@ -8,10 +8,9 @@ const pg = require("pg");
 const app_port = process.env.APP_PORT;
 const users = require("./models/users");
 const droneDatas = require("./models/data");
-//const drones = require("./models/data");
-//const flights = require("./models/data");
 
 const pool = new pg.Pool({
+  host: process.env.DB_HOST,
   user: process.env.DB_USER,
   database: process.env.DB_NAME,
   password: process.env.DB_PASS,
